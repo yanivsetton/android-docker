@@ -1,3 +1,32 @@
+# android on docker
+This setup was made on **Ubuntu**
+
+#Create the android-sdk
+Clone the repo
+
+Make sure to be in the root of the repository and execute the command: 
+docker build -t="your registry/android-sdk:latest android-sdk" #Or name it how you want
+
+or just use my docker image:
+docker pull "yanivsetton/android-sdk:latest"
+
+Assuming you build docker image or pull my image execute the following # Make your relevant changes
+docker run -it --rm -v $(pwd)/sdk:/sdk yanivsetton/android-sdk:latest bash -c 'cp -a $ANDROID_HOME/. /sdk'
+
+make sure you have java, and please pay attention to the mapped volume that we just update with the above command
+If you don't have java installed
+apt-get install default-jdk -y
+
+than
+sdk/tools/bin/sdkmanager --update
+
+# android vnc
+build the docker image:
+docker build -t="your registry/android-sdk-vnc:latest vnc" # Or name it how you want
+
+or just use my image
+docker pull "yanivsetton/android-sdk-vnc:latest"
+
 # AndroidSDK
 
 Android SDK development environment Docker image
