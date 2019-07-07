@@ -1,7 +1,18 @@
 # Android on Docker
-This setup was made on **Ubuntu, CentOS and MAC**
+Building the SDK image on any **UNIX.**
 
-## Step 1 - Getting the SDK
+**Requirements:**
+> * Docker installed</br>
+> * Java installed
+
+## Step 1 - Clone the repo
+```
+git clone https://github.com/yanivsetton/android-docker.git
+
+```
+
+
+
 """
 The first thing is to get the SDK, for that there is two options availble
 First - Download my docker image yanivsetton/android-android-sdk-vnc
