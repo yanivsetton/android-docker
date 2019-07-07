@@ -1,12 +1,5 @@
 FROM ubuntu:18.04
-
-# Author
 LABEL maintainer "yanivsiton89@gmail.com"
-
-# support multiarch: i386 architecture
-# install Java
-# install essential tools
-# install Qt
 RUN dpkg --add-architecture i386 && \
     apt-get update -y && \
     apt-get install -y --no-install-recommends libncurses5:i386 libc6:i386 libstdc++6:i386 lib32gcc1 lib32ncurses5 lib32z1 zlib1g:i386 && \
@@ -15,7 +8,6 @@ RUN dpkg --add-architecture i386 && \
     apt-get install -y --no-install-recommends qt5-default
 
 # download and install Gradle
-# https://services.gradle.org/distributions/
 ARG GRADLE_VERSION=5.2.1
 RUN cd /opt && \
     wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
@@ -24,7 +16,6 @@ RUN cd /opt && \
     rm gradle*.zip
 
 # download and install Kotlin compiler
-# https://github.com/JetBrains/kotlin/releases/latest
 ARG KOTLIN_VERSION=1.3.21
 RUN cd /opt && \
     wget -q https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_VERSION}/kotlin-compiler-${KOTLIN_VERSION}.zip && \
@@ -32,7 +23,6 @@ RUN cd /opt && \
     rm *kotlin*.zip
 
 # download and install Android SDK
-# https://developer.android.com/studio/#downloads
 ARG ANDROID_SDK_VERSION=4333796
 ENV ANDROID_HOME /opt/android-sdk
 RUN mkdir -p ${ANDROID_HOME} && cd ${ANDROID_HOME} && \
@@ -80,4 +70,22 @@ RUN apt-get update -y && \
     (rm /tmp/*.pub 2> /dev/null || true)
 
 ADD supervisord.conf /etc/supervisor/conf.d/
-ADD ./sdk/* /opt/android-sdk/
+COPY /sdk/ /opt/android-sdk/
+ENV USER root
+ENV DISPLAY :1
+EXPOSE 5901
+ADD vncpass.sh /tmp/
+ADD watchdog.sh /usr/local/bin/
+ADD supervisord_vncserver.conf /etc/supervisor/conf.d/
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends xfce4 xfce4-goodies xfonts-base dbus-x11 tightvncserver expect && \
+    chmod +x /tmp/vncpass.sh; sync && \
+    /tmp/vncpass.sh && \
+    rm /tmp/vncpass.sh && \
+    apt-get remove -y expect && apt-get autoremove -y && \
+    FILE_SSH_ENV="/root/.ssh/environment" && \
+    echo "DISPLAY=:1" >> $FILE_SSH_ENV
+RUN cp -a $ANDROID_HOME/emulator/lib64/qt/lib/. /usr/lib/x86_64-linux-gnu/
+RUN chmod +x /opt/license_accepter.sh && /opt/license_accepter.sh $ANDROID_HOME
+CMD ["/usr/bin/supervisord"]
+
