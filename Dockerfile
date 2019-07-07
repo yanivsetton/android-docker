@@ -87,5 +87,5 @@ RUN apt-get update -y && \
     echo "DISPLAY=:1" >> $FILE_SSH_ENV
 RUN cp -a $ANDROID_HOME/emulator/lib64/qt/lib/. /usr/lib/x86_64-linux-gnu/
 RUN chmod +x /opt/license_accepter.sh && /opt/license_accepter.sh $ANDROID_HOME
-CMD ["/usr/bin/supervisord"]
+CMD /opt/license_accepter.sh $ANDROID_HOME; /usr/bin/supervisord
 
