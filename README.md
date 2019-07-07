@@ -18,7 +18,7 @@ cd sdk/tools/bin/
 ./sdkmanager "platform-tools" "platforms;android-<api_level>" "emulator"
 
 Example:
-sdkmanager ""system-images;android-25;google_apis;armeabi-v7a" " ""system-images;android-24;google_apis;armeabi-v7a""
+sdkmanager "system-images;android-25;google_apis;armeabi-v7a" " "system-images;android-24;google_apis;armeabi-v7a"
 
 # Please check sdkmanager --list to get the full options.
 ```
