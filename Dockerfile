@@ -41,7 +41,6 @@ ADD license_accepter.sh /opt/
 RUN chmod +x /opt/license_accepter.sh && /opt/license_accepter.sh $ANDROID_HOME
 
 # SSH server
-ADD sshd-banner /etc/ssh/
 ADD authorized_keys /tmp/
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openssh-server supervisor locales && \
