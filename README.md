@@ -2,7 +2,7 @@
 This setup was made on **Ubuntu, CentOS and MAC**
 
 ## Step 1 - Getting the SDK
-'''
+"""
 The first thing is to get the SDK, for that there is two options availble
 First - Download my docker image yanivsetton/android-android-sdk-vnc
 that is packed with all the required dependencies and availble with one simple command
@@ -12,8 +12,23 @@ Second - download the files and mount into the docker service that you will run
 Recommeneded way is to use the docker images that is easy and simple to use.
 The guide will assume you are using the docker image.
 
-Download the docker image
-docker pull yanivsetton/android-android-sdk-vnc
+# Download the docker image
+docker pull yanivsetton/android-android-sdk-vnc:latest
+
+# Running the docker container
+docker run -d -p 5901:5901 -p 2222:22 yanivsetton/android-android-sdk-vnc:latest
+you can either ssh, remote vnc or exec the container to run actions as update sdk manager create emulators and interact with the adb directly.
+
+# Note
+If you want to use volume for updating android sdk version etc..
+before running the container for the first time we need to get all the sdk files and mount to the host file system
+
+docker run -it --rm -v $(pwd)/sdk:/sdk yanivsetton/android-android-sdk-vnc:latest bash -c 'cp -a $ANDROID_HOME/. /sdk'
+
+
+cp -a $ANDROID_HOME/emulator/lib64/qt/lib/. /usr/lib/x86_64-linux-gnu/
+
+"""
 
 #Create the android-sdk
 Clone the repo
