@@ -1,5 +1,19 @@
-# android on docker
-This setup was made on **Ubuntu**
+# Android on Docker
+This setup was made on **Ubuntu, CentOS and MAC**
+
+## Step 1 - Getting the SDK
+'''
+The first thing is to get the SDK, for that there is two options availble
+First - Download my docker image yanivsetton/android-android-sdk-vnc
+that is packed with all the required dependencies and availble with one simple command
+
+Second - download the files and mount into the docker service that you will run
+
+Recommeneded way is to use the docker images that is easy and simple to use.
+The guide will assume you are using the docker image.
+
+Download the docker image
+docker pull yanivsetton/android-android-sdk-vnc
 
 #Create the android-sdk
 Clone the repo
