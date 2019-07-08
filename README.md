@@ -75,5 +75,4 @@ so the finall command should be like:
 docker run -d --name android-emulator -p 5901:5901 -p 2222:22 -v android-docker/sdk/:/opt/android-sdk/ yanivsetton/android-ready-sdk-vnc:latest:latest
 ```
 
-![banner](Android_Banner.png){:height="50%" width="100%"}
-<img src="Android_Banner.png" width="1400" height="100">
+<img src="Android_Banner.png" width="1400" height="120">
